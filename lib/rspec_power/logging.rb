@@ -1,3 +1,5 @@
+require_relative "rails/logging_helpers"
+
 RSpec.shared_context "rspec_power::logging:verbose" do
   around(:each) do |ex|
     if ex.metadata[:log] == true || ex.metadata[:log] == :all

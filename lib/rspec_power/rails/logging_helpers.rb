@@ -1,8 +1,8 @@
-require 'logger'
-require 'active_support/tagged_logging' if defined?(ActiveSupport::TaggedLogging)
-require 'active_support/logger'         if defined?(ActiveSupport::Logger)
-require 'active_record'                 if defined?(ActiveRecord)
-require 'active_support/log_subscriber' if defined?(ActiveSupport::LogSubscriber)
+require "logger"
+require "active_support/tagged_logging" if defined?(ActiveSupport::TaggedLogging)
+require "active_support/logger"         if defined?(ActiveSupport::Logger)
+require "active_record"                 if defined?(ActiveRecord)
+require "active_support/log_subscriber" if defined?(ActiveSupport::LogSubscriber)
 
 module RspecPower
   module Rails
@@ -33,7 +33,7 @@ module RspecPower
         end
 
         def restore_logger(old_loggers, targets)
-          targets.each_with_index { |t,i| t.logger = old_loggers[i] }
+          targets.each_with_index { |t, i| t.logger = old_loggers[i] }
         end
 
         def all_loggables

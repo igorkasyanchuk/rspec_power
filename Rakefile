@@ -17,4 +17,4 @@ namespace :dummy do
   end
 end
 
-task default: [:spec, "dummy:spec"]
+task default: [ :spec, "dummy:spec" ]
