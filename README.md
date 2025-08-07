@@ -32,11 +32,7 @@ bundle install
 
 ## 🚀 Quick Start
 
-The gem automatically configures itself when required. Just add this to your `spec_helper.rb` or `rails_helper.rb`:
-
-```ruby
-require "rspec_power"
-```
+The gem automatically configures itself when required. Just add it to your Gemfile.
 
 ## 📚 Usage Examples
 
@@ -47,6 +43,18 @@ Capture all Rails logs during specific tests:
 ```ruby
 RSpec.describe User, :log do
   it "creates a user with logging" do
+    # All Rails logs will be captured and displayed
+    user = User.create!(name: "John Doe", email: "john@example.com")
+    expect(user).to be_persisted
+  end
+end
+```
+
+or for specific tests:
+
+```ruby
+RSpec.describe User do
+  it "creates a user with logging", :log do
     # All Rails logs will be captured and displayed
     user = User.create!(name: "John Doe", email: "john@example.com")
     expect(user).to be_persisted
