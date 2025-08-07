@@ -3,6 +3,7 @@ PATH
   specs:
     rspec_power (0.1.0)
       rails
+      rspec
       rspec-rails
 
 GEM
@@ -131,8 +132,6 @@ GEM
     nio4r (2.7.4)
     nokogiri (1.18.9-arm64-darwin)
       racc (~> 1.4)
-    nokogiri (1.18.9-x86_64-linux-gnu)
-      racc (~> 1.4)
     parallel (1.27.0)
     parser (3.3.9.0)
       ast (~> 2.4.1)
@@ -196,6 +195,10 @@ GEM
     regexp_parser (2.11.0)
     reline (0.6.2)
       io-console (~> 0.5)
+    rspec (3.13.1)
+      rspec-core (~> 3.13.0)
+      rspec-expectations (~> 3.13.0)
+      rspec-mocks (~> 3.13.0)
     rspec-core (3.13.5)
       rspec-support (~> 3.13.0)
     rspec-expectations (3.13.5)
@@ -244,7 +247,6 @@ GEM
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
     sqlite3 (2.7.3-arm64-darwin)
-    sqlite3 (2.7.3-x86_64-linux-gnu)
     stringio (3.1.7)
     thor (1.4.0)
     timeout (0.4.3)
@@ -263,12 +265,12 @@ GEM
 
 PLATFORMS
   arm64-darwin
-  x86_64-linux
 
 DEPENDENCIES
   debug
   propshaft
   puma
+  rspec
   rspec-rails
   rspec_power!
   rubocop-rails-omakase

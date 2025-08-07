@@ -2,6 +2,8 @@ source "https://rubygems.org"
 
 # Specify your gem's dependencies in rspec_power.gemspec.
 gem "puma"
+gem "rspec"
+gem "rspec-rails"
 
 gem "sqlite3"
 
@@ -15,7 +17,6 @@ gem "rubocop-rails-omakase", require: false
 
 group :test do
   gem "rspec_power", path: "."
-  gem "rspec-rails"
 end
 
 gem "debug"
