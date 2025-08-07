@@ -1,28 +1,255 @@
-# RspecPower
-Short description and motivation.
+# RSpec Power 🔥
 
-## Usage
-How to use my plugin.
+[![Gem Version](https://badge.fury.io/rb/rspec_power.svg)](https://badge.fury.io/rb/rspec_power)
+[![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![RailsJazz](https://github.com/igorkasyanchuk/rails_time_travel/blob/main/docs/my_other.svg?raw=true)](https://www.railsjazz.com)
 
-## Installation
+A powerful collection of RSpec helpers and utilities that supercharge your Rails testing experience! 🚀
+
+## ✨ Features
+
+- 🔍 **Enhanced Logging**: Capture and control Rails application logs during tests
+- 🌍 **Environment Management**: Easily override environment variables in tests
+- 🌐 **I18n Testing**: Test your application in different locales
+- ⏰ **Time Manipulation**: Freeze and travel through time in your tests
+- 🎯 **Shared Contexts**: Pre-configured RSpec shared contexts for common testing scenarios
+
+## 📦 Installation
+
 Add this line to your application's Gemfile:
 
 ```ruby
-gem "rspec_power"
+group :test do
+  gem "rspec_power"
+end
 ```
 
 And then execute:
+
 ```bash
-$ bundle
+bundle install
 ```
 
-Or install it yourself as:
-```bash
-$ gem install rspec_power
+## 🚀 Quick Start
+
+The gem automatically configures itself when required. Just add this to your `spec_helper.rb` or `rails_helper.rb`:
+
+```ruby
+require "rspec_power"
 ```
 
-## Contributing
-Contribution directions go here.
+## 📚 Usage Examples
 
-## License
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+### 🔍 Enhanced Logging
+
+Capture all Rails logs during specific tests:
+
+```ruby
+RSpec.describe User, :log do
+  it "creates a user with logging" do
+    # All Rails logs will be captured and displayed
+    user = User.create!(name: "John Doe", email: "john@example.com")
+    expect(user).to be_persisted
+  end
+end
+```
+
+Capture only ActiveRecord logs:
+
+```ruby
+RSpec.describe User, :log_ar do
+  it "shows SQL queries" do
+    # Only ActiveRecord logs will be captured
+    users = User.where(active: true).includes(:profile)
+    expect(users).to be_any
+  end
+end
+```
+
+Manual logging control:
+
+```ruby
+RSpec.describe User do
+  it "manually controls logging" do
+    with_logging do
+      # All Rails logs captured here
+      User.create!(name: "Jane")
+    end
+    # Logging back to normal here
+  end
+
+  it "captures only ActiveRecord logs" do
+    with_ar_logging do
+      # Only ActiveRecord logs captured here
+      User.count
+    end
+  end
+end
+```
+
+### 🌍 Environment Variable Management
+
+Override environment variables for specific tests:
+
+```ruby
+RSpec.describe PaymentService, :with_env do
+  it "uses test API key", with_env: { 'STRIPE_API_KEY' => 'test_key_123' } do
+    service = PaymentService.new
+    expect(service.api_key).to eq('test_key_123')
+  end
+
+  it "handles multiple env vars", with_env: {
+    'RAILS_ENV' => 'test',
+    'DATABASE_URL' => 'postgresql://localhost/test_db'
+  } do
+    expect(ENV['RAILS_ENV']).to eq('test')
+    expect(ENV['DATABASE_URL']).to eq('postgresql://localhost/test_db')
+  end
+end
+```
+
+Manual environment control:
+
+```ruby
+RSpec.describe ConfigService do
+  it "manually overrides environment" do
+    with_test_env('API_URL' => 'https://api.test.com') do
+      expect(ENV['API_URL']).to eq('https://api.test.com')
+    end
+    # Environment restored automatically
+  end
+end
+```
+
+### 🌐 Internationalization (I18n) Testing
+
+Test your application in different locales:
+
+```ruby
+RSpec.describe User, :with_locale do
+  it "displays name in English", with_locale: :en do
+    user = User.new(name: "John")
+    expect(user.greeting).to eq("Hello, John!")
+  end
+
+  it "displays name in Spanish", with_locale: :es do
+    user = User.new(name: "Juan")
+    expect(user.greeting).to eq("¡Hola, Juan!")
+  end
+
+  it "displays name in French", with_locale: :fr do
+    user = User.new(name: "Jean")
+    expect(user.greeting).to eq("Bonjour, Jean!")
+  end
+end
+```
+
+Manual locale control:
+
+```ruby
+RSpec.describe LocalizationHelper do
+  it "manually changes locale" do
+    with_locale(:de) do
+      expect(I18n.locale).to eq(:de)
+      expect(t('hello')).to eq('Hallo')
+    end
+    # Locale restored automatically
+  end
+end
+```
+
+### ⏰ Time Manipulation
+
+Freeze time for consistent test results:
+
+```ruby
+RSpec.describe Order, :with_time_freeze do
+  it "creates order with current timestamp", with_time_freeze: "2024-01-15 10:30:00" do
+    order = Order.create!(amount: 100)
+    expect(order.created_at).to eq(Time.parse("2024-01-15 10:30:00"))
+  end
+
+  it "handles time-sensitive logic", with_time_freeze: Time.new(2024, 12, 25, 12, 0, 0) do
+    expect(Time.current).to eq(Time.new(2024, 12, 25, 12, 0, 0))
+    # Test Christmas-specific logic
+  end
+end
+```
+
+Manual time control:
+
+```ruby
+RSpec.describe TimeService do
+  it "manually travels through time" do
+    travel_to(Time.new(2024, 6, 15, 14, 30, 0)) do
+      expect(Time.current).to eq(Time.new(2024, 6, 15, 14, 30, 0))
+    end
+    # Time restored automatically
+  end
+end
+```
+
+## 🎯 Shared Contexts
+
+The gem provides several pre-configured shared contexts:
+
+- `rspec_power::logging:verbose` - Enables verbose logging for tests with `:log` metadata
+- `rspec_power::logging:active_record` - Enables ActiveRecord logging for tests with `:log_ar` metadata
+- `rspec_power::env:override` - Automatically handles environment variable overrides
+- `rspec_power::i18n:dynamic` - Manages locale changes for tests with `:with_locale` metadata
+- `rspec_power::time:freeze` - Handles time freezing for tests with `:with_time_freeze` metadata
+
+## 🔧 Configuration
+
+The gem automatically configures itself, but you can customize the behavior:
+
+```ruby
+# In spec_helper.rb or rails_helper.rb
+RSpec.configure do |config|
+  # Customize logging behavior
+  config.include RspecPower::Rails::LoggingHelpers
+  config.include_context "rspec_power::logging:verbose", log: true
+  config.include_context "rspec_power::logging:active_record", log_ar: true
+
+  # Customize environment helpers
+  config.include RspecPower::Rails::EnvHelpers
+  config.include_context "rspec_power::env:override", :with_env
+
+  # Customize I18n helpers
+  config.include RspecPower::Rails::I18nHelpers
+  config.include_context "rspec_power::i18n:dynamic", :with_locale
+
+  # Customize time helpers
+  config.include RspecPower::Rails::TimeHelpers
+  config.include_context "rspec_power::time:freeze", :with_time_freeze
+end
+```
+
+## 🧪 Testing
+
+Run the test suite:
+
+```bash
+bundle exec rspec
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [MIT-LICENSE](MIT-LICENSE) file for details.
+
+---
+
+[<img src="https://github.com/igorkasyanchuk/rails_time_travel/blob/main/docs/more_gems.png?raw=true"
+/>](https://www.railsjazz.com/?utm_source=github&utm_medium=bottom&utm_campaign=rails_performance)
+
+[!["Buy Me A Coffee"](https://github.com/igorkasyanchuk/get-smart/blob/main/docs/snapshot-bmc-button.png?raw=true)](https://buymeacoffee.com/igorkasyanchuk)
+
+Made with ❤️ for the Rails testing community!
