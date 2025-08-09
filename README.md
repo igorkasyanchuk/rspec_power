@@ -12,6 +12,7 @@ A powerful collection of RSpec helpers and utilities that supercharge your Rails
  - 🌍 **Environment Management**: Override env vars via `:with_env` or `with_test_env`; values restored automatically
  - 🌐 **I18n Testing**: Switch locales via `:with_locale` or `with_locale`; assert translations in multiple languages
  - ⏰ **Time Manipulation**: Freeze time via `:with_time_freeze` or `travel_to`; deterministic timestamps in specs
+- ⚡ **Performance Budgeting**: Enforce maximum execution time with `with_maximum_execution_time` or `:with_maximum_execution_time`
 - 🕘 **Time Zone Control**: Run examples in specific time zones via `:with_time_zone`
 - 🏗️ **CI-only Guards**: Conditionally run or skip on CI with `:ci_only` and `:skip_ci`
  - 🎯 **Shared Contexts**: Turnkey contexts for logging, env, I18n, time, time zones, and CI guards
@@ -249,6 +250,30 @@ RSpec.describe TimeService do
       expect(Time.current).to eq(Time.new(2024, 6, 15, 14, 30, 0))
     end
     # Time restored automatically
+  end
+end
+```
+
+### ⚡ Performance Budgeting
+
+Limit example duration:
+
+```ruby
+RSpec.describe Importer do
+  it "is fast enough" do
+    with_maximum_execution_time(50) do
+      Importer.run!
+    end
+  end
+end
+```
+
+Or via metadata:
+
+```ruby
+RSpec.describe Importer, with_maximum_execution_time: 100 do
+  it "completes quickly" do
+    Importer.run!
   end
 end
 ```

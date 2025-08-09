@@ -6,6 +6,7 @@ require "rspec_power/i18n"
 require "rspec_power/time"
 require "rspec_power/ci"
 require "rspec_power/sql"
+require "rspec_power/performance"
 
 RSpec.configure do |config|
   # Logging
@@ -35,4 +36,8 @@ RSpec.configure do |config|
   config.include RSpecPower::Rails::ActiveRecordHelpers
   config.include_context "rspec_power::sql:none", :with_no_sql_queries
   config.include_context "rspec_power::sql:must", :with_sql_queries
+
+  # Performance
+  config.include RSpecPower::Rails::PerformanceHelpers
+  config.include_context "rspec_power::performance:maximum_execution_time", :with_maximum_execution_time
 end
