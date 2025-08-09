@@ -4,6 +4,7 @@ require "rspec_power/logging"
 require "rspec_power/env"
 require "rspec_power/i18n"
 require "rspec_power/time"
+require "rspec_power/ci"
 
 RSpec.configure do |config|
   config.include RspecPower::Rails::LoggingHelpers
@@ -20,4 +21,8 @@ RSpec.configure do |config|
   config.include RspecPower::Rails::TimeHelpers
   config.include_context "rspec_power::time:freeze", :with_time_freeze
   config.include_context "rspec_power::time:zone", :with_time_zone
+
+  # CI-only guards
+  config.include_context "rspec_power::ci:only", :ci_only
+  config.include_context "rspec_power::ci:skip", :skip_ci
 end

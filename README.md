@@ -8,11 +8,13 @@ A powerful collection of RSpec helpers and utilities that supercharge your Rails
 
 ## ✨ Features
 
-- 🔍 **Enhanced Logging**: Capture and control Rails application logs during tests
-- 🌍 **Environment Management**: Easily override environment variables in tests
-- 🌐 **I18n Testing**: Test your application in different locales
-- ⏰ **Time Manipulation**: Freeze and travel through time in your tests
-- 🎯 **Shared Contexts**: Pre-configured RSpec shared contexts for common testing scenarios
+- 🔍 **Enhanced Logging**: Capture and control Rails logs; optionally AR-only via `:with_log_ar` or `with_ar_logging`; supports `:with_log`/`:with_logs`
+ - 🌍 **Environment Management**: Override env vars via `:with_env` or `with_test_env`; values restored automatically
+ - 🌐 **I18n Testing**: Switch locales via `:with_locale` or `with_locale`; assert translations in multiple languages
+ - ⏰ **Time Manipulation**: Freeze time via `:with_time_freeze` or `travel_to`; deterministic timestamps in specs
+- 🕘 **Time Zone Control**: Run examples in specific time zones via `:with_time_zone`
+- 🏗️ **CI-only Guards**: Conditionally run or skip on CI with `:ci_only` and `:skip_ci`
+ - 🎯 **Shared Contexts**: Turnkey contexts for logging, env, I18n, time, time zones, and CI guards
 
 ## 📦 Installation
 
@@ -217,6 +219,9 @@ The gem provides several pre-configured shared contexts:
 - `rspec_power::env:override` - Automatically handles environment variable overrides
 - `rspec_power::i18n:dynamic` - Manages locale changes for tests with `:with_locale` metadata
 - `rspec_power::time:freeze` - Handles time freezing for tests with `:with_time_freeze` metadata
+- `rspec_power::time:zone` - Executes examples in a given time zone with `:with_time_zone` metadata
+- `rspec_power::ci:only` - Runs examples only in CI when tagged with `:ci_only`
+- `rspec_power::ci:skip` - Skips examples in CI when tagged with `:skip_ci`
 
 ## 🔧 Configuration
 
@@ -243,7 +248,31 @@ RSpec.configure do |config|
   config.include RspecPower::Rails::TimeHelpers
   config.include_context "rspec_power::time:freeze", :with_time_freeze
   config.include_context "rspec_power::time:zone", :with_time_zone
+
+  # CI-only guards
+  config.include_context "rspec_power::ci:only", :ci_only
+  config.include_context "rspec_power::ci:skip", :skip_ci
 end
+```
+
+### CI detection via environment variable
+
+The CI-only guards rely on the `CI` environment variable:
+
+- Considered CI when `ENV["CI"]` is set to any non-empty value other than `"false"` or `"0"` (case-insensitive).
+- Considered non-CI when `ENV["CI"]` is unset/empty, `"false"`, or `"0"`.
+
+Examples:
+
+```bash
+# Run a single file as if on CI
+CI=true bundle exec rspec spec/path/to/file_spec.rb
+
+# Also treated as CI
+CI=1 bundle exec rspec
+
+# Explicitly run as non-CI
+CI=0 bundle exec rspec
 ```
 
 ## 🧪 Testing

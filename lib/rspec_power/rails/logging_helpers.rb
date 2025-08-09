@@ -69,6 +69,7 @@ module RspecPower
       ensure
         LoggingHelpers.restore_logger(old, LoggingHelpers.ar_loggables)
       end
+
     end
   end
 end
