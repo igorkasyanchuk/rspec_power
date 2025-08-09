@@ -10,3 +10,13 @@ RSpec.shared_context "rspec_power::time:freeze" do
     end
   end
 end
+
+RSpec.shared_context "rspec_power::time:zone" do
+  around(:each) do |example|
+    if zone = example.metadata[:with_time_zone]
+      with_time_zone(zone) { example.run }
+    else
+      example.run
+    end
+  end
+end

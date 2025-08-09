@@ -19,4 +19,5 @@ RSpec.configure do |config|
 
   config.include RspecPower::Rails::TimeHelpers
   config.include_context "rspec_power::time:freeze", :with_time_freeze
+  config.include_context "rspec_power::time:zone", :with_time_zone
 end

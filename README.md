@@ -184,6 +184,17 @@ RSpec.describe Order, :with_time_freeze do
 end
 ```
 
+Run tests in a specific time zone:
+
+```ruby
+RSpec.describe ReportGenerator, :with_time_zone do
+  it "builds report in US Pacific", with_time_zone: "Pacific Time (US & Canada)" do
+    # The block runs with Time.zone set to Pacific
+    expect(Time.zone.name).to eq("Pacific Time (US & Canada)")
+  end
+end
+```
+
 Manual time control:
 
 ```ruby
@@ -231,6 +242,7 @@ RSpec.configure do |config|
   # Customize time helpers
   config.include RspecPower::Rails::TimeHelpers
   config.include_context "rspec_power::time:freeze", :with_time_freeze
+  config.include_context "rspec_power::time:zone", :with_time_zone
 end
 ```
 
