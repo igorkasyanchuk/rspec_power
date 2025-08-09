@@ -7,8 +7,9 @@ require "rspec_power/time"
 
 RSpec.configure do |config|
   config.include RspecPower::Rails::LoggingHelpers
-  config.include_context "rspec_power::logging:verbose", log: true
-  config.include_context "rspec_power::logging:active_record", log_ar: true
+  config.include_context "rspec_power::logging:verbose", with_log: true
+  config.include_context "rspec_power::logging:verbose", with_logs: true
+  config.include_context "rspec_power::logging:active_record", with_log_ar: true
 
   config.include RspecPower::Rails::EnvHelpers
   config.include_context "rspec_power::env:override", :with_env

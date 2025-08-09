@@ -41,7 +41,7 @@ The gem automatically configures itself when required. Just add it to your Gemfi
 Capture all Rails logs during specific tests:
 
 ```ruby
-RSpec.describe User, :log do
+RSpec.describe User, :with_log do
   it "creates a user with logging" do
     # All Rails logs will be captured and displayed
     user = User.create!(name: "John Doe", email: "john@example.com")
@@ -50,11 +50,11 @@ RSpec.describe User, :log do
 end
 ```
 
-or for specific tests:
+or for specific tests (alias `:with_logs` is also supported):
 
 ```ruby
 RSpec.describe User do
-  it "creates a user with logging", :log do
+  it "creates a user with logging", :with_log do
     # All Rails logs will be captured and displayed
     user = User.create!(name: "John Doe", email: "john@example.com")
     expect(user).to be_persisted
@@ -65,7 +65,7 @@ end
 Capture only ActiveRecord logs:
 
 ```ruby
-RSpec.describe User, :log_ar do
+RSpec.describe User, :with_log_ar do
   it "shows SQL queries" do
     # Only ActiveRecord logs will be captured
     users = User.where(active: true).includes(:profile)
@@ -201,8 +201,8 @@ end
 
 The gem provides several pre-configured shared contexts:
 
-- `rspec_power::logging:verbose` - Enables verbose logging for tests with `:log` metadata
-- `rspec_power::logging:active_record` - Enables ActiveRecord logging for tests with `:log_ar` metadata
+- `rspec_power::logging:verbose` - Enables verbose logging for tests with `:with_log` metadata
+- `rspec_power::logging:active_record` - Enables ActiveRecord logging for tests with `:with_log_ar` metadata
 - `rspec_power::env:override` - Automatically handles environment variable overrides
 - `rspec_power::i18n:dynamic` - Manages locale changes for tests with `:with_locale` metadata
 - `rspec_power::time:freeze` - Handles time freezing for tests with `:with_time_freeze` metadata
@@ -216,8 +216,9 @@ The gem automatically configures itself, but you can customize the behavior:
 RSpec.configure do |config|
   # Customize logging behavior
   config.include RspecPower::Rails::LoggingHelpers
-  config.include_context "rspec_power::logging:verbose", log: true
-  config.include_context "rspec_power::logging:active_record", log_ar: true
+  config.include_context "rspec_power::logging:verbose", with_log: true
+  config.include_context "rspec_power::logging:verbose", with_logs: true
+  config.include_context "rspec_power::logging:active_record", with_log_ar: true
 
   # Customize environment helpers
   config.include RspecPower::Rails::EnvHelpers
@@ -248,6 +249,10 @@ bundle exec rspec
 3. Commit your changes (`git commit -m 'Add some amazing feature'`)
 4. Push to the branch (`git push origin feature/amazing-feature`)
 5. Open a Pull Request
+
+## 📖 Credits
+
+Code for logging was extracted from [test-prof](https://github.com/test-prof/test-prof) gem.
 
 ## 📄 License
 
