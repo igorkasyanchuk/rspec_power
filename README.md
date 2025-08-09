@@ -15,6 +15,7 @@ A powerful collection of RSpec helpers and utilities that supercharge your Rails
 - 🕘 **Time Zone Control**: Run examples in specific time zones via `:with_time_zone`
 - 🏗️ **CI-only Guards**: Conditionally run or skip on CI with `:ci_only` and `:skip_ci`
  - 🎯 **Shared Contexts**: Turnkey contexts for logging, env, I18n, time, time zones, and CI guards
+- 🧪 **SQL Guards**: Ensure no SQL via `expect_no_sql` or `:with_no_sql_queries`; require at least one SQL via `expect_sql` or `:with_sql_queries`
 
 ## 📦 Installation
 
@@ -95,6 +96,48 @@ RSpec.describe User do
     end
   end
 end
+```
+
+Ensure a block performs no SQL:
+
+```ruby
+RSpec.describe CacheWarmup do
+  it "does not hit the DB" do
+    expect_no_sql do
+      CacheWarmup.build_in_memory!
+    end
+  end
+end
+```
+
+Require that a block performs at least one SQL statement:
+
+```ruby
+RSpec.describe MigrationChecker do
+  it "touches the DB" do
+    expect_sql do
+      ActiveRecord::Base.connection.execute("SELECT 1")
+    end
+  end
+end
+```
+
+Or tag an example/group to enforce or require queries automatically:
+
+```ruby
+RSpec.describe CacheWarmup, :with_no_sql_queries do
+  it "builds entirely in memory" do
+    CacheWarmup.build_in_memory!
+  end
+end
+
+RSpec.describe MigrationChecker, :with_sql_queries do
+  it "must hit the DB at least once" do
+    ActiveRecord::Base.connection.execute("SELECT 1")
+  end
+end
+
+# (Only the correct tags are supported)
 ```
 
 ### 🌍 Environment Variable Management
