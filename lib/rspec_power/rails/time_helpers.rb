@@ -1,7 +1,7 @@
 require "active_support/testing/time_helpers"
 require "time"
 
-module RspecPower
+module RSpecPower
   module Rails
     module TimeHelpers
       include ActiveSupport::Testing::TimeHelpers

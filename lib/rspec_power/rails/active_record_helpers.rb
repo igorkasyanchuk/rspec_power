@@ -1,4 +1,4 @@
-module RspecPower
+module RSpecPower
   module Rails
     module ActiveRecordHelpers
       # Fails the example if any SQL is executed within the provided block.

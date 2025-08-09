@@ -274,21 +274,21 @@ The gem automatically configures itself, but you can customize the behavior:
 # In spec_helper.rb or rails_helper.rb
 RSpec.configure do |config|
   # Customize logging behavior
-  config.include RspecPower::Rails::LoggingHelpers
+  config.include RSpecPower::Rails::LoggingHelpers
   config.include_context "rspec_power::logging:verbose", with_log: true
   config.include_context "rspec_power::logging:verbose", with_logs: true
   config.include_context "rspec_power::logging:active_record", with_log_ar: true
 
   # Customize environment helpers
-  config.include RspecPower::Rails::EnvHelpers
+  config.include RSpecPower::Rails::EnvHelpers
   config.include_context "rspec_power::env:override", :with_env
 
   # Customize I18n helpers
-  config.include RspecPower::Rails::I18nHelpers
+  config.include RSpecPower::Rails::I18nHelpers
   config.include_context "rspec_power::i18n:dynamic", :with_locale
 
   # Customize time helpers
-  config.include RspecPower::Rails::TimeHelpers
+  config.include RSpecPower::Rails::TimeHelpers
   config.include_context "rspec_power::time:freeze", :with_time_freeze
   config.include_context "rspec_power::time:zone", :with_time_zone
 

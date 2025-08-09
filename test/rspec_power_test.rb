@@ -1,7 +1,7 @@
 require "test_helper"
 
-class RspecPowerTest < ActiveSupport::TestCase
+class RSpecPowerTest < ActiveSupport::TestCase
   test "it has a version number" do
-    assert RspecPower::VERSION
+    assert RSpecPower::VERSION
   end
 end

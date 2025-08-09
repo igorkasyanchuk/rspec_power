@@ -2,7 +2,7 @@ require_relative "lib/rspec_power/version"
 
 Gem::Specification.new do |spec|
   spec.name        = "rspec_power"
-  spec.version     = RspecPower::VERSION
+  spec.version     = RSpecPower::VERSION
   spec.authors     = [ "Igor Kasyanchuk" ]
   spec.email       = [ "igorkasyanchuk@gmail.com" ]
   spec.homepage    = "TODO"

@@ -1,4 +1,4 @@
-module RspecPower
+module RSpecPower
   module Rails
     module I18nHelpers
       def with_locale(locale)

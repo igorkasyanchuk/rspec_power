@@ -1,4 +1,4 @@
-module RspecPower
+module RSpecPower
   module Rails
     module EnvHelpers
       def with_test_env(overrides = {})

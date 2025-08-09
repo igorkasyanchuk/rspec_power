@@ -1,5 +1,5 @@
-module RspecPower
+module RSpecPower
   class Engine < ::Rails::Engine
-    isolate_namespace RspecPower
+    isolate_namespace RSpecPower
   end
 end

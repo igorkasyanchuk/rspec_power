@@ -4,7 +4,7 @@ require "active_support/logger"         if defined?(ActiveSupport::Logger)
 require "active_record"                 if defined?(ActiveRecord)
 require "active_support/log_subscriber" if defined?(ActiveSupport::LogSubscriber)
 
-module RspecPower
+module RSpecPower
   module Rails
     module LoggingHelpers
       class << self

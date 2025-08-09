@@ -1,6 +1,6 @@
 require_relative "#{__dir__}/rails_helper"
 
-RSpec.describe "RspecPower in a Rails app", :with_logs, type: :request do
+RSpec.describe "RSpecPower in a Rails app", :with_logs, type: :request do
   it "logs SQL for a simple request" do
     expect {
       get "/"
