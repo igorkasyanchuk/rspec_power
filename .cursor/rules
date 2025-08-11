@@ -1,3 +1,0 @@
-## Ruby style guide:
-
-- make sure code is compatible with "rubocop", you can run "rubocop -A" to fix most issues

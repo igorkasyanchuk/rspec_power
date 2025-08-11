@@ -4,6 +4,7 @@ require "rspec_power/logging"
 require "rspec_power/env"
 require "rspec_power/i18n"
 require "rspec_power/time"
+require "rspec_power/request_dump"
 require "rspec_power/ci"
 require "rspec_power/sql"
 require "rspec_power/performance"
@@ -44,4 +45,8 @@ RSpec.configure do |config|
 
   # Benchmark
   config.include_context "rspec_power::benchmark:run", :with_benchmark
+
+  # Request dump helpers (session/cookies/flash/headers)
+  config.include RSpecPower::RequestDumpHelpers
+  config.include_context "rspec_power::request_dump:after", :with_request_dump
 end
