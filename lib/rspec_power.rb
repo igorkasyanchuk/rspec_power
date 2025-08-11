@@ -7,6 +7,7 @@ require "rspec_power/time"
 require "rspec_power/ci"
 require "rspec_power/sql"
 require "rspec_power/performance"
+require "rspec_power/benchmark"
 
 RSpec.configure do |config|
   # Logging
@@ -40,4 +41,7 @@ RSpec.configure do |config|
   # Performance
   config.include RSpecPower::Rails::PerformanceHelpers
   config.include_context "rspec_power::performance:maximum_execution_time", :with_maximum_execution_time
+
+  # Benchmark
+  config.include_context "rspec_power::benchmark:run", :with_benchmark
 end

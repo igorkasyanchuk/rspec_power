@@ -13,6 +13,7 @@ A powerful collection of RSpec helpers and utilities that supercharge your Rails
  - 🌐 **I18n Testing**: Switch locales via `:with_locale` or `with_locale`; assert translations in multiple languages
  - ⏰ **Time Manipulation**: Freeze time via `:with_time_freeze` or `travel_to`; deterministic timestamps in specs
 - ⚡ **Performance Budgeting**: Enforce maximum execution time with `with_maximum_execution_time` or `:with_maximum_execution_time`
+- 📏 **Benchmarking**: Benchmark entire examples via `with_benchmark: { runs: N }` and get a suite summary
 - 🕘 **Time Zone Control**: Run examples in specific time zones via `:with_time_zone`
 - 🏗️ **CI-only Guards**: Conditionally run or skip on CI with `:ci_only` and `:skip_ci`
  - 🎯 **Shared Contexts**: Turnkey contexts for logging, env, I18n, time, time zones, and CI guards
@@ -277,6 +278,20 @@ RSpec.describe Importer, with_maximum_execution_time: 100 do
   end
 end
 ```
+
+### 📏 Benchmarking
+
+Benchmark entire examples via metadata and get a suite summary:
+
+```ruby
+RSpec.describe Parser, with_benchmark: { runs: 10 } do
+  it "parses quickly" do
+    Parser.parse!(payload)
+  end
+end
+```
+
+The example is executed multiple times (runs) and the average/min/max times are printed after the suite.
 
 ## 🎯 Shared Contexts
 
