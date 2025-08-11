@@ -37,7 +37,7 @@ module RSpecPower
           runs: iterations,
           avg_ms: avg,
           min_ms: timings_ms.min,
-          max_ms: timings_ms.max,
+          max_ms: timings_ms.max
         }
 
         BenchmarkHelpers.add_result(summary)
