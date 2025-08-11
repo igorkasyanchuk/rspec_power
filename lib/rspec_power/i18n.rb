@@ -1,4 +1,14 @@
-require_relative "rails/i18n_helpers"
+module RSpecPower
+  module I18nHelpers
+      def with_locale(locale)
+        old = I18n.locale
+        I18n.locale = locale
+        yield
+      ensure
+        I18n.locale = old
+      end
+  end
+end
 
 RSpec.shared_context "rspec_power::i18n:dynamic" do
   around(:each) do |example|

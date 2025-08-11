@@ -1,4 +1,19 @@
-require_relative "rails/time_helpers"
+require "active_support/testing/time_helpers"
+require "time"
+
+module RSpecPower
+  module TimeHelpers
+    include ActiveSupport::Testing::TimeHelpers
+
+    def with_time_zone(zone)
+      if defined?(ActiveSupport::TimeZone)
+        ::Time.use_zone(zone) { yield }
+      else
+        yield
+      end
+    end
+  end
+end
 
 RSpec.shared_context "rspec_power::time:freeze" do
   around(:each) do |example|
