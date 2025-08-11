@@ -9,15 +9,15 @@ A powerful collection of RSpec helpers and utilities that supercharge your Rails
 ## ✨ Features
 
 - 🔍 **Enhanced Logging**: Capture and control Rails logs; optionally AR-only via `:with_log_ar` or `with_ar_logging`; supports `:with_log`/`:with_logs`
- - 🌍 **Environment Management**: Override env vars via `:with_env` or `with_test_env`; values restored automatically
- - 🌐 **I18n Testing**: Switch locales via `:with_locale` or `with_locale`; assert translations in multiple languages
- - ⏰ **Time Manipulation**: Freeze time via `:with_time_freeze` or `travel_to`; deterministic timestamps in specs
+- 🌍 **Environment Management**: Override env vars via `:with_env` or `with_test_env`; values restored automatically
+- 🌐 **I18n Testing**: Switch locales via `:with_locale` or `with_locale`; assert translations in multiple languages
+- ⏰ **Time Manipulation**: Freeze time via `:with_time_freeze` or `travel_to`; deterministic timestamps in specs
 - ⚡ **Performance Budgeting**: Enforce maximum execution time with `with_maximum_execution_time` or `:with_maximum_execution_time`
 - 📏 **Benchmarking**: Benchmark entire examples via `with_benchmark: { runs: N }` and get a suite summary
 - 🕘 **Time Zone Control**: Run examples in specific time zones via `:with_time_zone`
 - 🏗️ **CI-only Guards**: Conditionally run or skip on CI with `:ci_only` and `:skip_ci`
- - 🎯 **Shared Contexts**: Turnkey contexts for logging, env, I18n, time, time zones, and CI guards
 - 🧪 **SQL Guards**: Ensure no SQL via `expect_no_sql` or `:with_no_sql_queries`; require at least one SQL via `expect_sql` or `:with_sql_queries`
+- 💾 **Request Dump**: Dump request state (session, cookies, flash, headers) after each example via `:with_request_dump`
 
 ## 📦 Installation
 
@@ -293,6 +293,44 @@ end
 
 The example is executed multiple times (runs) and the average/min/max times are printed after the suite.
 
+### 💾 Request Dump
+
+Dump request-related state after each example to help debug request specs.
+
+Supported items:
+
+- `:session`
+- `:cookies`
+- `:flash`
+- `:headers`
+
+Enable for an example or group and choose what to dump:
+
+```ruby
+RSpec.describe "Users API", type: :request do
+  it "dumps everything by default", :with_request_dump do
+    post "/set_state"
+    expect(response).to be_successful
+  end
+
+  it "dumps only session and cookies",
+     with_request_dump: { what: [:session, :cookies] } do
+    post "/set_state"
+    expect(response).to be_successful
+  end
+end
+```
+
+Example output:
+
+```
+[rspec_power] Dump after example: Users API dumps everything by default
+[rspec_power] session: {"user_id"=>42}
+[rspec_power] cookies: {"hello"=>"world"}
+[rspec_power] flash: {"notice"=>"done"}
+[rspec_power] headers: { ... }
+```
+
 ## 🎯 Shared Contexts
 
 The gem provides several pre-configured shared contexts:
@@ -305,6 +343,7 @@ The gem provides several pre-configured shared contexts:
 - `rspec_power::time:zone` - Executes examples in a given time zone with `:with_time_zone` metadata
 - `rspec_power::ci:only` - Runs examples only in CI when tagged with `:ci_only`
 - `rspec_power::ci:skip` - Skips examples in CI when tagged with `:skip_ci`
+- `rspec_power::request_dump:after` - Dumps selected request state after each example with `:with_request_dump` metadata
 
 ## 🔧 Configuration
 
@@ -335,6 +374,10 @@ RSpec.configure do |config|
   # CI-only guards
   config.include_context "rspec_power::ci:only", :ci_only
   config.include_context "rspec_power::ci:skip", :skip_ci
+  
+  # Request dump helpers (session/cookies/flash/headers)
+  config.include RSpecPower::RequestDumpHelpers
+  config.include_context "rspec_power::request_dump:after", :with_request_dump
 end
 ```
 
@@ -365,6 +408,19 @@ Run the test suite:
 ```bash
 bundle exec rspec
 ```
+
+## Linter
+
+```bash
+bundle exec rubocop
+```
+
+To fix most issues, run:
+
+```bash
+bundle exec rubocop -A
+```
+
 
 ## 🤝 Contributing
 
