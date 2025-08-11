@@ -4,6 +4,11 @@ globs:
 alwaysApply: true
 ---
 
+## New features:
+
+- read README.md for reference
+- use similar structure for new features
+
 ## Ruby style guide:
 
 - make sure code is compatible with "rubocop", you can run "rubocop -A" to fix most issues

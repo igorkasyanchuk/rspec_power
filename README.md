@@ -13,13 +13,13 @@ A powerful collection of RSpec helpers and utilities that supercharge your Rails
 | 🔍 Enhanced Logging | Capture and control Rails logs; ActiveRecord-only option | `:with_log`, `:with_logs`, `:with_log_ar`, `with_logging`, `with_ar_logging` |
 | 🌍 Environment Management | Override environment variables with auto-restore | `:with_env`, `with_test_env` |
 | 🌐 I18n Testing | Switch locales and assert translations | `:with_locale`, `with_locale` |
-| ⏰ Time Manipulation | Freeze/travel time for deterministic tests | `:with_time_freeze`, `travel_to` |
+| ⏰ Time Manipulation | Freeze/travel time for deterministic tests | `:with_time_freeze` |
+| 🕘 Time Zone Control | Run examples in a specific time zone | `:with_time_zone` |
 | ⚡ Performance Budgeting | Enforce maximum example execution time | `with_maximum_execution_time`, `:with_maximum_execution_time` |
 | 📏 Benchmarking | Run examples multiple times and summarize | `with_benchmark: { runs: N }` |
-| 🕘 Time Zone Control | Run examples in a specific time zone | `:with_time_zone` |
 | 🏗️ CI-only Guards | Conditionally run or skip on CI | `:ci_only`, `:skip_ci` |
 | 🧪 SQL Guards | Ensure no SQL or require at least one | `expect_no_sql`, `:with_no_sql_queries`, `expect_sql`, `:with_sql_queries` |
-| 💾 Request Dump | Dump session, cookies, flash, headers after each example | `:with_request_dump`, `with_request_dump: { what: [...] }` |
+| 💾 Request Dump | Dump session, cookies, flash, headers after each example | `:with_request_dump`, `with_request_dump: { what: [:session, :cookies, :flash, :headers] }` |
 
 ## 📦 Installation
 
@@ -376,7 +376,7 @@ RSpec.configure do |config|
   # CI-only guards
   config.include_context "rspec_power::ci:only", :ci_only
   config.include_context "rspec_power::ci:skip", :skip_ci
-  
+
   # Request dump helpers (session/cookies/flash/headers)
   config.include RSpecPower::RequestDumpHelpers
   config.include_context "rspec_power::request_dump:after", :with_request_dump
