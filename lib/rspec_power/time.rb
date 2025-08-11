@@ -5,6 +5,16 @@ module RSpecPower
   module TimeHelpers
     include ActiveSupport::Testing::TimeHelpers
 
+    # Prefer Timecop if it is available to avoid conflicts with
+    # ActiveSupport::Testing::TimeHelpers and remove require-order dependency.
+    def travel_to(time_value, &block)
+      if defined?(Timecop)
+        Timecop.freeze(time_value, &block)
+      else
+        super(time_value, &block)
+      end
+    end
+
     def with_time_zone(zone)
       if defined?(ActiveSupport::TimeZone)
         ::Time.use_zone(zone) { yield }
