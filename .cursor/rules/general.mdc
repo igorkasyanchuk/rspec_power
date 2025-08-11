@@ -8,6 +8,7 @@ alwaysApply: true
 
 - read README.md for reference
 - use similar structure for new features
+- always add specs for new features / new code
 
 ## Ruby style guide:
 

@@ -20,6 +20,7 @@ A powerful collection of RSpec helpers and utilities that supercharge your Rails
 | 🏗️ CI-only Guards | Conditionally run or skip on CI | `:ci_only`, `:skip_ci` |
 | 🧪 SQL Guards | Ensure no SQL or require at least one | `expect_no_sql`, `:with_no_sql_queries`, `expect_sql`, `:with_sql_queries` |
 | 💾 Request Dump | Dump session, cookies, flash, headers after each example | `:with_request_dump`, `with_request_dump: { what: [:session, :cookies, :flash, :headers] }` |
+| 🗄️ DB Dump on Failure | Dump DB tables to CSV when an example fails | `:dump_db_on_fail`, `dump_db_on_fail: { tables: [...], except: [...] }` |
 
 ## 📦 Installation
 
@@ -326,6 +327,38 @@ end
 Example output:
 
 ```
+
+### 🗄️ DB Dump on Failure
+
+Dump database state to CSV files when an example fails. Useful to inspect exactly what data led to the failure.
+
+By default, all non-empty tables are dumped (excluding `schema_migrations` and `ar_internal_metadata`). Each table is exported to a separate CSV file, ordered by primary key if present. Files are written under `tmp/rspec_power/db_failures/<timestamp>_<spec-name>/` and include a `metadata.json` with the spec name.
+
+Enable for an example or group:
+
+```ruby
+RSpec.describe User, :dump_db_on_fail do
+  it "creates a user" do
+    # ...
+  end
+end
+```
+
+Customize which tables to include/exclude and output directory:
+
+```ruby
+RSpec.describe Report, dump_db_on_fail: { tables: ["users", "accounts"], except: ["accounts"], dir: Rails.root.join("tmp", "db_dumps").to_s } do
+  it "fails and dumps only selected tables" do
+    # ...
+  end
+end
+```
+
+Options:
+
+- `tables` / `only`: specify a whitelist of tables to dump
+- `except` / `exclude`: tables to skip
+- `dir`: base output directory (default: `tmp/rspec_power/db_failures`)
 [rspec_power] Dump after example: Users API dumps everything by default
 [rspec_power] session: {"user_id"=>42}
 [rspec_power] cookies: {"hello"=>"world"}

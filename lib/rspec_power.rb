@@ -5,6 +5,7 @@ require "rspec_power/env"
 require "rspec_power/i18n"
 require "rspec_power/time"
 require "rspec_power/request_dump"
+require "rspec_power/db_dump"
 require "rspec_power/ci"
 require "rspec_power/sql"
 require "rspec_power/performance"
@@ -49,4 +50,7 @@ RSpec.configure do |config|
   # Request dump helpers (session/cookies/flash/headers)
   config.include RSpecPower::RequestDumpHelpers
   config.include_context "rspec_power::request_dump:after", :with_request_dump
+
+  # DB dump on failure
+  config.include_context "rspec_power::db_dump:on_fail", :dump_db_on_fail
 end
