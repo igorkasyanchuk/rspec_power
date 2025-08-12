@@ -89,4 +89,15 @@ RSpec.describe "DB dump helpers" do
       expect(Dir.children(tmp)).to be_empty
     end
   end
+
+  it "dump table to csv", :with_dump_db_on_fail do
+    user = User.create(name: "John Doe", age: 10)
+    city = City.create(name: "New York")
+    user.cities << city
+    expect(User.count).to eq(1)
+    expect(City.count).to eq(1)
+    expect(user.cities.count).to eq(1)
+    # uncomment to test
+    # expect(city.users.count).to eq(2)
+  end
 end

@@ -133,7 +133,8 @@ RSpec.shared_context "rspec_power::db_dump:on_fail" do
   include RSpecPower::DbDumpHelpers
 
   after(:each) do |example|
-    dump_meta = example.metadata[:dump_db_on_fail]
+    dump_meta = example.metadata[:with_dump_db_on_fail]
+    dump_meta = example.metadata[:dump_db_on_fail] if dump_meta.nil?
     next unless dump_meta
     next unless example.exception
 

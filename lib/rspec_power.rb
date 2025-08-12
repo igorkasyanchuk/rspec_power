@@ -52,5 +52,7 @@ RSpec.configure do |config|
   config.include_context "rspec_power::request_dump:after", :with_request_dump
 
   # DB dump on failure
+  # Prefer :with_dump_db_on_fail; keep :dump_db_on_fail for backward compatibility
+  config.include_context "rspec_power::db_dump:on_fail", :with_dump_db_on_fail
   config.include_context "rspec_power::db_dump:on_fail", :dump_db_on_fail
 end
