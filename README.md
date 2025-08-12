@@ -237,23 +237,10 @@ end
 Run tests in a specific time zone:
 
 ```ruby
-RSpec.describe ReportGenerator, :with_time_zone do
+RSpec.describe ReportGenerator do
   it "builds report in US Pacific", with_time_zone: "Pacific Time (US & Canada)" do
     # The block runs with Time.zone set to Pacific
     expect(Time.zone.name).to eq("Pacific Time (US & Canada)")
-  end
-end
-```
-
-Manual time control:
-
-```ruby
-RSpec.describe TimeService do
-  it "manually travels through time" do
-    travel_to(Time.new(2024, 6, 15, 14, 30, 0)) do
-      expect(Time.current).to eq(Time.new(2024, 6, 15, 14, 30, 0))
-    end
-    # Time restored automatically
   end
 end
 ```
@@ -327,12 +314,22 @@ end
 Example output:
 
 ```
+[rspec_power] Dump after example: Users API dumps everything by default
+[rspec_power] session: {"user_id"=>42}
+[rspec_power] cookies: {"hello"=>"world"}
+[rspec_power] flash: {"notice"=>"done"}
+[rspec_power] headers: { ... }
+```
 
 ### 🗄️ DB Dump on Failure
 
 Dump database state to CSV files when an example fails. Useful to inspect exactly what data led to the failure.
 
-By default, all non-empty tables are dumped (excluding `schema_migrations` and `ar_internal_metadata`). Each table is exported to a separate CSV file, ordered by primary key if present. Files are written under `tmp/rspec_power/db_failures/<timestamp>_<spec-name>/` and include a `metadata.json` with the spec name.
+- Defaults:
+  - Dumps all non-empty tables, excluding `schema_migrations` and `ar_internal_metadata`
+  - Exports each table to a separate CSV, ordered by primary key (if present)
+  - Writes to `tmp/rspec_power/db_failures/<timestamp>_<spec-name>/`
+  - Includes `metadata.json` with spec info
 
 Enable for an example or group:
 
@@ -347,7 +344,11 @@ end
 Customize which tables to include/exclude and output directory:
 
 ```ruby
-RSpec.describe Report, with_dump_db_on_fail: { tables: ["users", "accounts"], except: ["accounts"], dir: Rails.root.join("tmp", "db_dumps").to_s } do
+RSpec.describe Report, with_dump_db_on_fail: {
+  tables: ["users", "accounts"],
+  except: ["accounts"],
+  dir: Rails.root.join("tmp", "db_dumps").to_s
+} do
   it "fails and dumps only selected tables" do
     # ...
   end
@@ -356,15 +357,11 @@ end
 
 Options:
 
-- `tables` / `only`: specify a whitelist of tables to dump
+- `tables` / `only`: whitelist tables to dump
 - `except` / `exclude`: tables to skip
 - `dir`: base output directory (default: `tmp/rspec_power/db_failures`)
-[rspec_power] Dump after example: Users API dumps everything by default
-[rspec_power] session: {"user_id"=>42}
-[rspec_power] cookies: {"hello"=>"world"}
-[rspec_power] flash: {"notice"=>"done"}
-[rspec_power] headers: { ... }
-```
+
+Compatibility: the legacy tag `:dump_db_on_fail` remains supported as an alias.
 
 ## 🎯 Shared Contexts
 
