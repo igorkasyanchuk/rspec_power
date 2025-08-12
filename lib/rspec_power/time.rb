@@ -9,7 +9,7 @@ module RSpecPower
     # ActiveSupport::Testing::TimeHelpers and remove require-order dependency.
     def travel_to(time_value, &block)
       if defined?(Timecop)
-        Timecop.freeze(time_value, &block)
+        Timecop.travel(time_value, &block)
       else
         super(time_value, &block)
       end
