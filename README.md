@@ -17,10 +17,10 @@ A powerful collection of RSpec helpers and utilities that supercharge your Rails
 | [🕘 Time Zone](#-time-zone) | Run examples in a specific time zone | `:with_time_zone` |
 | [⚡ Performance Budgeting](#-performance-budgeting) | Enforce maximum example execution time | `with_maximum_execution_time`, `:with_maximum_execution_time` |
 | [📏 Benchmarking](#-benchmarking) | Run examples multiple times and summarize | `with_benchmark: { runs: N }` |
-| [🏗️ CI Guards](#-ci-guards) | Conditionally run or skip on CI | `:with_ci_only`, `:with_skip_ci` |
+| [🏗️ CI Guards](#ci-guards) | Conditionally run or skip on CI | `:with_ci_only`, `:with_skip_ci` |
 | [🧪 SQL Guards](#-sql-guards) | Ensure no SQL or require at least one | `expect_no_sql`, `:with_no_sql_queries`, `expect_sql`, `:with_sql_queries` |
 | [💾 Request Dump](#-request-dump) | Dump session, cookies, flash, headers after each example | `:with_request_dump`, `with_request_dump: { what: [:session, :cookies, :flash, :headers] }` |
-| [🗄️ DB Dump on Failure](#-db-dump-on-failure) | Dump DB tables to CSV when an example fails | `:with_dump_db_on_fail`, `with_dump_db_on_fail: { tables: [...], except: [...] }` |
+| [🗄️ DB Dump on Failure](#db-dump-on-failure) | Dump DB tables to CSV when an example fails | `:with_dump_db_on_fail`, `with_dump_db_on_fail: { tables: [...], except: [...] }` |
 
 ## 📦 Installation
 
@@ -323,7 +323,7 @@ Example output:
 [rspec_power] headers: { ... }
 ```
 
-### 🗄️ DB Dump on Failure
+### DB Dump on Failure
 
 Dump database state to CSV files when an example fails. Useful to inspect exactly what data led to the failure.
 
@@ -415,9 +415,30 @@ RSpec.configure do |config|
 end
 ```
 
-### CI detection via environment variable
+### CI Guards
 
-The CI-only guards rely on the `CI` environment variable:
+Run or skip specs depending on whether the suite is running on CI.
+
+- Tag to run only on CI: `:with_ci_only`
+- Tag to skip on CI: `:with_skip_ci`
+
+```ruby
+RSpec.describe Deployment, :with_ci_only do
+  it "runs only on CI" do
+    expect(ENV["CI"]).to be_present
+  end
+end
+
+RSpec.describe HeavySpec, :with_skip_ci do
+  it "skips on CI" do
+    # expensive checks
+  end
+end
+```
+
+CI detection via environment variable:
+
+The guards rely on the `CI` environment variable:
 
 - Considered CI when `ENV["CI"]` is set to any non-empty value other than `"false"` or `"0"` (case-insensitive).
 - Considered non-CI when `ENV["CI"]` is unset/empty, `"false"`, or `"0"`.
