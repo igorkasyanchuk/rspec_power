@@ -32,6 +32,9 @@ RSpec.configure do |config|
   config.include_context "rspec_power::time:zone", :with_time_zone
 
   # CI-only guards
+  # Prefer new tags with "with_" prefix; keep old ones for compatibility
+  config.include_context "rspec_power::ci:only", :with_ci_only
+  config.include_context "rspec_power::ci:skip", :with_skip_ci
   config.include_context "rspec_power::ci:only", :ci_only
   config.include_context "rspec_power::ci:skip", :skip_ci
 

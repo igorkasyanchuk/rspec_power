@@ -17,7 +17,7 @@ A powerful collection of RSpec helpers and utilities that supercharge your Rails
 | 🕘 Time Zone Control | Run examples in a specific time zone | `:with_time_zone` |
 | ⚡ Performance Budgeting | Enforce maximum example execution time | `with_maximum_execution_time`, `:with_maximum_execution_time` |
 | 📏 Benchmarking | Run examples multiple times and summarize | `with_benchmark: { runs: N }` |
-| 🏗️ CI-only Guards | Conditionally run or skip on CI | `:ci_only`, `:skip_ci` |
+| 🏗️ CI-only Guards | Conditionally run or skip on CI | `:with_ci_only`, `:with_skip_ci` |
 | 🧪 SQL Guards | Ensure no SQL or require at least one | `expect_no_sql`, `:with_no_sql_queries`, `expect_sql`, `:with_sql_queries` |
 | 💾 Request Dump | Dump session, cookies, flash, headers after each example | `:with_request_dump`, `with_request_dump: { what: [:session, :cookies, :flash, :headers] }` |
 | 🗄️ DB Dump on Failure | Dump DB tables to CSV when an example fails | `:with_dump_db_on_fail`, `with_dump_db_on_fail: { tables: [...], except: [...] }` |
@@ -376,8 +376,8 @@ The gem provides several pre-configured shared contexts:
 - `rspec_power::i18n:dynamic` - Manages locale changes for tests with `:with_locale` metadata
 - `rspec_power::time:freeze` - Handles time freezing for tests with `:with_time_freeze` metadata
 - `rspec_power::time:zone` - Executes examples in a given time zone with `:with_time_zone` metadata
-- `rspec_power::ci:only` - Runs examples only in CI when tagged with `:ci_only`
-- `rspec_power::ci:skip` - Skips examples in CI when tagged with `:skip_ci`
+- `rspec_power::ci:only` - Runs examples only in CI when tagged with `:with_ci_only`
+- `rspec_power::ci:skip` - Skips examples in CI when tagged with `:with_skip_ci`
 - `rspec_power::request_dump:after` - Dumps selected request state after each example with `:with_request_dump` metadata
 
 ## 🔧 Configuration
@@ -407,8 +407,8 @@ RSpec.configure do |config|
   config.include_context "rspec_power::time:zone", :with_time_zone
 
   # CI-only guards
-  config.include_context "rspec_power::ci:only", :ci_only
-  config.include_context "rspec_power::ci:skip", :skip_ci
+  config.include_context "rspec_power::ci:only", :with_ci_only
+  config.include_context "rspec_power::ci:skip", :with_skip_ci
 
   # Request dump helpers (session/cookies/flash/headers)
   config.include RSpecPower::RequestDumpHelpers
