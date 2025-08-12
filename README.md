@@ -10,17 +10,17 @@ A powerful collection of RSpec helpers and utilities that supercharge your Rails
 
 | Feature | Summary | Usage |
 | --- | --- | --- |
-| [🔍 Enhanced Logging](#-enhanced-logging) | Capture and control Rails logs; ActiveRecord-only option | `:with_log`, `:with_logs`, `:with_log_ar`, `with_logging`, `with_ar_logging` |
-| [🌍 Environment Management](#-environment-variable-management) | Override environment variables with auto-restore | `:with_env`, `with_test_env` |
-| [🌐 I18n Testing](#-internationalization-i18n-testing) | Switch locales and assert translations | `:with_locale`, `with_locale` |
-| [⏰ Time Manipulation](#-time-manipulation) | Freeze/travel time for deterministic tests | `:with_time_freeze` |
-| [🕘 Time Zone Control](#-time-manipulation) | Run examples in a specific time zone | `:with_time_zone` |
-| [⚡ Performance Budgeting](#-performance-budgeting) | Enforce maximum example execution time | `with_maximum_execution_time`, `:with_maximum_execution_time` |
-| [📏 Benchmarking](#-benchmarking) | Run examples multiple times and summarize | `with_benchmark: { runs: N }` |
-| [🏗️ CI-only Guards](#-shared-contexts) | Conditionally run or skip on CI | `:with_ci_only`, `:with_skip_ci` |
-| [🧪 SQL Guards](#-sql-guards) | Ensure no SQL or require at least one | `expect_no_sql`, `:with_no_sql_queries`, `expect_sql`, `:with_sql_queries` |
-| [💾 Request Dump](#-request-dump) | Dump session, cookies, flash, headers after each example | `:with_request_dump`, `with_request_dump: { what: [:session, :cookies, :flash, :headers] }` |
-| [🗄️ DB Dump on Failure](#-db-dump-on-failure) | Dump DB tables to CSV when an example fails | `:with_dump_db_on_fail`, `with_dump_db_on_fail: { tables: [...], except: [...] }` |
+| [🔍 Enhanced Logging](#enhanced-logging) | Capture and control Rails logs; ActiveRecord-only option | `:with_log`, `:with_logs`, `:with_log_ar`, `with_logging`, `with_ar_logging` |
+| [🌍 Environment Management](#environment-variable-management) | Override environment variables with auto-restore | `:with_env`, `with_test_env` |
+| [🌐 I18n Testing](#internationalization-i18n-testing) | Switch locales and assert translations | `:with_locale`, `with_locale` |
+| [⏰ Time Freeze](#time-freeze) | Freeze/travel time for deterministic tests | `:with_time_freeze` |
+| [🕘 Time Zone](#time-zone) | Run examples in a specific time zone | `:with_time_zone` |
+| [⚡ Performance Budgeting](#performance-budgeting) | Enforce maximum example execution time | `with_maximum_execution_time`, `:with_maximum_execution_time` |
+| [📏 Benchmarking](#benchmarking) | Run examples multiple times and summarize | `with_benchmark: { runs: N }` |
+| [🏗️ CI Guards](#ci-guards) | Conditionally run or skip on CI | `:with_ci_only`, `:with_skip_ci` |
+| [🧪 SQL Guards](#sql-guards) | Ensure no SQL or require at least one | `expect_no_sql`, `:with_no_sql_queries`, `expect_sql`, `:with_sql_queries` |
+| [💾 Request Dump](#request-dump) | Dump session, cookies, flash, headers after each example | `:with_request_dump`, `with_request_dump: { what: [:session, :cookies, :flash, :headers] }` |
+| [🗄️ DB Dump on Failure](#db-dump-on-failure) | Dump DB tables to CSV when an example fails | `:with_dump_db_on_fail`, `with_dump_db_on_fail: { tables: [...], except: [...] }` |
 
 ## 📦 Installation
 
@@ -218,7 +218,7 @@ RSpec.describe LocalizationHelper do
 end
 ```
 
-### ⏰ Time Manipulation
+### ⏰ Time Freeze
 
 Freeze time for consistent test results:
 
@@ -236,7 +236,7 @@ RSpec.describe Order, :with_time_freeze do
 end
 ```
 
-Run tests in a specific time zone:
+### 🕘 Time Zone
 
 ```ruby
 RSpec.describe ReportGenerator do
