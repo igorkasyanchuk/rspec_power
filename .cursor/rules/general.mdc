@@ -4,6 +4,10 @@ globs:
 alwaysApply: true
 ---
 
+## Code
+
+- do not commit changes by default, always check with me if you can commit
+
 ## New features:
 
 - read README.md for reference

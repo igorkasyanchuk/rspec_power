@@ -20,3 +20,5 @@ group :test do
 end
 
 gem "debug"
+
+gem "rspec_power", path: "../rspec_power"

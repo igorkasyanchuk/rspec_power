@@ -28,7 +28,7 @@ Add this line to your application's Gemfile:
 
 ```ruby
 group :test do
-  gem "rspec_power"
+  gem "rspec_power", require: false
 end
 ```
 
