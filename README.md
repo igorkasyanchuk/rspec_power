@@ -18,7 +18,7 @@ A powerful collection of RSpec helpers and utilities that supercharge your Rails
 | [⚡ Performance Budgeting](#-performance-budgeting) | Enforce maximum example execution time | `with_maximum_execution_time`, `:with_maximum_execution_time` |
 | [📏 Benchmarking](#-benchmarking) | Run examples multiple times and summarize | `with_benchmark: { runs: N }` |
 | [🏗️ CI-only Guards](#-shared-contexts) | Conditionally run or skip on CI | `:with_ci_only`, `:with_skip_ci` |
-| [🧪 SQL Guards](#-shared-contexts) | Ensure no SQL or require at least one | `expect_no_sql`, `:with_no_sql_queries`, `expect_sql`, `:with_sql_queries` |
+| [🧪 SQL Guards](#-sql-guards) | Ensure no SQL or require at least one | `expect_no_sql`, `:with_no_sql_queries`, `expect_sql`, `:with_sql_queries` |
 | [💾 Request Dump](#-request-dump) | Dump session, cookies, flash, headers after each example | `:with_request_dump`, `with_request_dump: { what: [:session, :cookies, :flash, :headers] }` |
 | [🗄️ DB Dump on Failure](#-db-dump-on-failure) | Dump DB tables to CSV when an example fails | `:with_dump_db_on_fail`, `with_dump_db_on_fail: { tables: [...], except: [...] }` |
 
@@ -103,6 +103,8 @@ RSpec.describe User do
 end
 ```
 
+### 🧪 SQL Guards
+
 Ensure a block performs no SQL:
 
 ```ruby
@@ -142,7 +144,7 @@ RSpec.describe MigrationChecker, :with_sql_queries do
   end
 end
 
-# (Only the correct tags are supported)
+Supported tags: `:with_no_sql_queries`, `:with_sql_queries`
 ```
 
 ### 🌍 Environment Variable Management
