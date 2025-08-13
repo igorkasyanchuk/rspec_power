@@ -46,7 +46,7 @@ The gem automatically configures itself when required. Just add it to your Gemfi
 
 ### 🔍 Enhanced Logging
 
-Capture all Rails logs during specific tests:
+Capture all Rails logs during specific tests, copied from [test-prof](https://github.com/test-prof/test-prof) gem with a small enhancement:
 
 ```ruby
 RSpec.describe User, :with_log do
