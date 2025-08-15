@@ -11,7 +11,8 @@ require "rspec_power/sql"
 require "rspec_power/performance"
 require "rspec_power/benchmark"
 
-RSpec.configure do |config|
+if defined?(RSpec)
+  RSpec.configure do |config|
   # Logging
   config.include RSpecPower::LoggingHelpers
   config.include_context "rspec_power::logging:verbose", with_log: true
@@ -58,4 +59,5 @@ RSpec.configure do |config|
   # Prefer :with_dump_db_on_fail; keep :dump_db_on_fail for backward compatibility
   config.include_context "rspec_power::db_dump:on_fail", :with_dump_db_on_fail
   config.include_context "rspec_power::db_dump:on_fail", :dump_db_on_fail
+  end
 end

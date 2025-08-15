@@ -38,7 +38,7 @@ And then execute:
 bundle install
 ```
 
-If you are usinge "timecop" gem, you need to
+If you are using the "timecop" gem, you need to
 
 - add to Gemfile as `gem "rspec_power", require: false`
 - add `require "rspec_power"` before `require "timecop"` in `rails_helper.rb`.

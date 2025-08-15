@@ -75,17 +75,19 @@ module RSpecPower
       end
 
       def with_logging
-        old = LoggingHelpers.swap_logger(LoggingHelpers.all_loggables)
+        targets = LoggingHelpers.all_loggables
+        old_loggers = LoggingHelpers.swap_logger(targets)
         yield
       ensure
-        LoggingHelpers.restore_logger(old, LoggingHelpers.all_loggables)
+        LoggingHelpers.restore_logger(old_loggers, targets)
       end
 
       def with_ar_logging
-        old = LoggingHelpers.swap_logger(LoggingHelpers.ar_loggables)
+        targets = LoggingHelpers.ar_loggables
+        old_loggers = LoggingHelpers.swap_logger(targets)
         yield
       ensure
-        LoggingHelpers.restore_logger(old, LoggingHelpers.ar_loggables)
+        LoggingHelpers.restore_logger(old_loggers, targets)
       end
   end
 end

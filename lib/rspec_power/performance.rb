@@ -10,7 +10,8 @@ module RSpecPower
         yield
       ensure
         elapsed_ms = (Process.clock_gettime(Process::CLOCK_MONOTONIC) - start_time) * 1000.0
-        if elapsed_ms > max_ms
+        # Do not override an existing exception
+        if $!.nil? && elapsed_ms > max_ms
           formatted_elapsed = format("%.3f", elapsed_ms)
           formatted_limit = format("%.3f", max_ms)
           raise RSpec::Expectations::ExpectationNotMetError,

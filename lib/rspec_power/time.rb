@@ -1,3 +1,5 @@
+require "time"
+
 module RSpecPower
   module TimeHelpers
     def with_time_zone(zone)
