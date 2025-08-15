@@ -28,7 +28,7 @@ Add this line to your application's Gemfile:
 
 ```ruby
 group :test do
-  gem "rspec_power", require: false
+  gem "rspec_power"
 end
 ```
 
@@ -38,16 +38,10 @@ And then execute:
 bundle install
 ```
 
-In `rails_helper.rb` add 
+If you are usinge "timecop" gem, you need to
 
-```
-# spec/rails_helper.rb
-require_relative "../config/environment" # after this
-....
-require "rspec_power"
-```
-
-If you also use "timecop" gem, you need to require "rspec_power" before it.
+- add to Gemfile as `gem "rspec_power", require: false`
+- add `require "rspec_power"` before `require "timecop"` in `rails_helper.rb`.
 
 ## 🚀 Quick Start
 

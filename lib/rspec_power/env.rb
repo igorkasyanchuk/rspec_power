@@ -25,6 +25,10 @@ end
 RSpec.shared_context "rspec_power::env:override" do
   around(:each) do |example|
     overrides = example.metadata[:with_env] || {}
-    with_test_env(overrides) { example.run }
+    if overrides.any?
+      with_test_env(overrides) { example.run }
+    else
+      example.run
+    end
   end
 end
