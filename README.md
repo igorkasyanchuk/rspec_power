@@ -38,6 +38,17 @@ And then execute:
 bundle install
 ```
 
+In `rails_helper.rb` add 
+
+```
+# spec/rails_helper.rb
+require_relative "../config/environment" # after this
+....
+require "rspec_power"
+```
+
+If you also use "timecop" gem, you need to require "rspec_power" before it.
+
 ## 🚀 Quick Start
 
 The gem automatically configures itself when required. Just add it to your Gemfile.
